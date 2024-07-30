@@ -111,7 +111,7 @@ export default function ProductView() {
       <Row className="align-items-center">
         <Col lg={4}>
           <img
-            src={`http://localhost:4004/uploads/${image}`}
+            src={`${import.meta.env.VITE_API_URL}/uploads/${image}`}
             alt=""
             className="img-fluid card-img"
           />
