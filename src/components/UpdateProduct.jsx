@@ -11,7 +11,7 @@ export default function UpdateProduct({ product, fetchData }) {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = (productId) => {
-    fetch(`https://capstone2-dn1l.onrender.com/b4/products/${productId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/b4/products/${productId}`)
       .then((res) => res.json())
       .then((data) => {
         setProductId(data._id);
@@ -32,21 +32,18 @@ export default function UpdateProduct({ product, fetchData }) {
   const editProduct = (e, productId) => {
     e.preventDefault();
 
-    fetch(
-      `https://capstone2-dn1l.onrender.com/b4/products/${productId}/update`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          name: name,
-          description: description,
-          price: price,
-        }),
-      }
-    )
+    fetch(`${import.meta.env.VITE_API_URL}/b4/products/${productId}/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        price: price,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.message === "Product updated successfully") {

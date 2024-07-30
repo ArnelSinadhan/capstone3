@@ -7,7 +7,7 @@ export default function Profile() {
   const [details, setDetails] = useState({});
 
   useEffect(() => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/users/details", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/users/details`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

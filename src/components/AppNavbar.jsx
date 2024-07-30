@@ -13,23 +13,17 @@ export default function AppNavbar() {
   };
 
   return (
-    <Navbar expand="lg" className="navBar">
+    <Navbar expand="lg" className="navBar" fixed="top">
       <Container>
-        <Navbar.Brand className="navBrand text-warning">ShopEase</Navbar.Brand>
+        <Navbar.Brand className="navBrand text-warning" as={NavLink} to="/">
+          ShopEase
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link as={NavLink} to="/" className="navLink px-2 px-lg-3">
-              Home
-            </Nav.Link>
-            <Nav.Link
-              as={NavLink}
-              to="/products"
-              className="navLink px-2 px-lg-3">
+          <Nav className="ms-auto">
+            <Nav.Link as={NavLink} to="/products">
               Products
             </Nav.Link>
-          </Nav>
-          <Nav>
             {user.id !== null && user.id !== undefined ? (
               user.isAdmin ? (
                 <>

@@ -6,7 +6,7 @@ export default function FeaturedProducts() {
   const [previews, setPreviews] = useState([]);
 
   useEffect(() => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/products/active")
+    fetch(`${import.meta.env.VITE_API_URL}/b4/products/active`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -24,7 +24,7 @@ export default function FeaturedProducts() {
           }
         };
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 4; i++) {
           generateRandomNums();
 
           featured.push(
@@ -42,8 +42,8 @@ export default function FeaturedProducts() {
 
   return (
     <>
-      <h2 className="text-center pb-4">Featured Products</h2>
-      <CardGroup>{previews}</CardGroup>
+      <h2 className=" text-center mt-2">Featured Products</h2>
+      {previews}
     </>
   );
 }

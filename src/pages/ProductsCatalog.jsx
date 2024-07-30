@@ -13,8 +13,8 @@ export default function ProductsCatalog() {
   const fetchData = () => {
     let fetchUrl =
       user.isAdmin === true
-        ? "https://capstone2-dn1l.onrender.com/b4/products/all"
-        : "https://capstone2-dn1l.onrender.com/b4/products/active";
+        ? `${import.meta.env.VITE_API_URL}/b4/products/all`
+        : `${import.meta.env.VITE_API_URL}/b4/products/active`;
 
     fetch(fetchUrl, {
       headers: {
@@ -23,6 +23,7 @@ export default function ProductsCatalog() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.message === "No products found") {
           setProducts([]);
         } else {
@@ -45,12 +46,11 @@ export default function ProductsCatalog() {
             <Container>
               <Row>
                 <Col>
-                  <ProductSearch />
                   <div className="cardsDiv mb-5">
-                    <h2 className="text-center py-5 text-white">
-                      Our Products
-                    </h2>
-                    <CardGroup className="justify-content-center">
+                    <h2 className="text-center pt-5 mt-5 ">Our Products</h2>
+                    <ProductSearch />
+
+                    <CardGroup>
                       <UserView productData={products} />
                     </CardGroup>
                   </div>

@@ -1,10 +1,14 @@
 /* Global Styles */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 * {
+  font-family: "Oswald", sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-
+a {
+  text-decoration: none;
+}
 /* Header Styles */
 .header {
   background-color: #0d6efd;
@@ -22,133 +26,105 @@
 
 /* Navbar Styles */
 .navbar {
-  background-color: #f0f8ff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #a19f9f;
 }
 
 .navBrand {
   font-weight: bolder;
 }
 
-.navLink {
-  color: #003256 !important;
-  font-weight: bolder;
+.carousel-item img {
+  height: auto;
+  object-fit: cover;
+  width: 100vw;
 }
-
-.navLink:hover {
-  color: blue !important;
-}
-
-.ml-auto {
-  margin: auto;
-}
-
-/* Login Form Styles */
-.loginForm {
-  display: flex;
-  align-items: center;
-}
-
-/* Increment/Decrement Styles */
-.increment-decrement {
-  display: flex;
-  align-items: center;
-}
-
-/* Featured Section Styles */
-.featured {
-  display: grid;
-  align-content: center;
-}
-
-@media (max-width: 767.98px) {
-  .featured {
-    min-height: 65vh;
-    background: linear-gradient(
-        rgba(255, 255, 255, 0.6),
-        rgba(255, 255, 255, 0.6)
-      ),
-      url("./src/assets/featured image.jpg") no-repeat center;
-    background-size: cover;
+/* Large screen styles */
+@media (min-width: 992px) {
+  .carousel-item img {
+    height: 400px;
+    object-fit: fill;
+    width: 100vw;
+  }
+  .previewCardImg {
+    height: 300px;
+    object-fit: contain;
+    width: 100vw;
+  }
+  .adminCardImg {
+    height: 300px;
+    object-fit: contain;
+    width: 100vw;
   }
 }
 
-@media (min-width: 768px) {
-  .featured {
-    min-height: 65vh;
-    background: url("./src/assets/featured image.jpg") no-repeat center;
-    background-size: cover;
-  }
+.card {
+  border: 1px solid #f8f9fc;
+  border-radius: 4px !important;
+  background-color: #fafafa !important;
 }
-
-/* Product Page Styles */
-.productPage {
-  background: url("./src/assets/productPage.jpg") no-repeat center;
-  background-size: cover;
-  background-attachment: fixed;
+.card-img {
+  transition: transform 0.2s;
+  width: 100%;
+  height: 300px;
 }
-
-/* Log In and Register Form Styles */
-@media (max-width: 767.98px) {
-  .logInImg,
-  .registerImg {
-    display: none;
-  }
-
-  .logInForm,
-  .registerForm {
-    background: linear-gradient(
-        rgba(255, 255, 255, 0.6),
-        rgba(255, 255, 255, 0.6)
-      ),
-      url("./src/assets/login.png") no-repeat center;
-    background-size: cover;
-  }
+.card-img:hover {
+  transform: scale(1.2);
 }
-
-/* Profile Section Styles */
-.profile {
-  min-height: 50vh;
+.card-body {
+  background-color: #f8f9fc;
+  padding-top: 0;
 }
-
-/* Icon and Info Section Styles */
-.icon {
+.cardText {
+  font-size: 12px;
+}
+a.cardTitle {
+  text-decoration: none;
+  color: black;
+}
+.btnDetails {
+  background-color: #ffc107 !important;
+  border-radius: 0 !important;
+}
+.addToCartInput {
+  border: none;
+}
+.btnPlus,
+.btnMinus {
+  background-color: transparent !important;
+  color: black !important;
+  border: none !important;
+  font-size: 18px !important;
+}
+.quantityWrapper {
+  border: 1px solid #a19f9f;
+  width: fit-content !important;
+  border-radius: 99px;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.quantityBox {
+  display: flex;
+  flex-direction: row;
+  width: fit-content !important;
+  margin: 0 !important;
 }
 
-.info {
-  display: grid;
-  background-color: #ffd700;
-  align-content: center;
+.shoppingCart {
+  background-color: #f8f9fc;
 }
-
-@media (max-width: 767.98px) {
-  .icon {
-    display: none;
-  }
-
-  .info {
-    min-height: 80vh;
-    background: url("./src/assets/icon.png") no-repeat center;
-    background-size: cover;
-  }
+.checkOutBtn {
+  color: black !important;
+  background-color: transparent !important;
+  border-radius: 99px !important;
+  border: 1px solid #a19f9f !important;
 }
-
-/* Card Styles */
-.cardsDiv,
-.cards {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+.checkOutBtn:hover {
+  background-color: #ffc107 !important;
 }
-
-/* Cart Page Styles */
-.cartPage {
-  background: url("./src/assets/cartPage.jpg") no-repeat center;
-  min-height: 100vh;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
-.cartTable {
-  opacity: 0.9;
+.clearCartBtn {
+  background-color: #dc3545 !important;
+  border: none !important;
+  border-radius: 99px !important;
 }

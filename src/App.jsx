@@ -33,7 +33,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("https://capstone2-dn1l.onrender.com/b4/users/details", {
+      fetch(`${import.meta.env.VITE_API_URL}/b4/users/details`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -67,20 +67,8 @@ function App() {
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <Router>
-        {!user.isAdmin ? (
-          <h5 className="header">
-            Free shipping with min order of ₱3,000!{" "}
-            <Link to={"/products"}>
-              <img
-                src={ShopNowImg}
-                alt="shopNow Image"
-                className="img-fluid headerImg"
-              />
-            </Link>
-          </h5>
-        ) : null}
         <AppNavbar />
-        <div className="MainDiv">
+        <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<ProductsCatalog />} />

@@ -11,23 +11,25 @@ export default function AddProduct({ handleClose, fetchData }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [file, setFile] = useState(null);
 
   function createProduct(e) {
     e.preventDefault();
-
+    console.log(file);
     let token = localStorage.getItem("token");
 
-    fetch("https://capstone2-dn1l.onrender.com/b4/products", {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("file", file); // Add file to formData
+
+    fetch(`${import.meta.env.VITE_API_URL}/b4/products`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, // Do not set Content-Type here
       },
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        price: price,
-      }),
+      body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
@@ -35,12 +37,12 @@ export default function AddProduct({ handleClose, fetchData }) {
           Swal.fire({
             title: "Error on Adding product",
             icon: "error",
-            text: "Product already exist",
+            text: "Product already exists",
           });
         } else if (data) {
           setName("");
           setDescription("");
-          setPrice(0);
+          setPrice("");
 
           Swal.fire({
             title: "Success on Adding product",
@@ -58,6 +60,14 @@ export default function AddProduct({ handleClose, fetchData }) {
             text: "Unsuccessful Product Creation",
           });
         }
+      })
+      .catch((error) => {
+        console.error("Error adding product:", error);
+        Swal.fire({
+          title: "Error on Adding product",
+          icon: "error",
+          text: "An unexpected error occurred.",
+        });
       });
   }
 
@@ -93,6 +103,14 @@ export default function AddProduct({ handleClose, fetchData }) {
             required
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Product Image</Form.Label>
+          <Form.Control
+            type="file"
+            required
+            onChange={(e) => setFile(e.target.files[0])} // Handle file input
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="my-3">

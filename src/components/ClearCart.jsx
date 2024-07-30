@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 export default function ClearCart({ user, fetchCart }) {
   const deleteCart = (user) => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/carts/clear-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/carts/clear-cart`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function ClearCart({ user, fetchCart }) {
   };
 
   return (
-    <Button variant="danger" onClick={() => deleteCart(user)}>
+    <Button className="clearCartBtn p-2 px-4" onClick={() => deleteCart(user)}>
       Clear Cart
     </Button>
   );

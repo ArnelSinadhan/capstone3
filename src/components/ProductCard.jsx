@@ -1,28 +1,32 @@
 import { useState } from "react";
-import { Row, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ productProp }) {
-  const { _id, name, description, price } = productProp;
+  const { _id, name, description, price, image } = productProp;
 
   return (
-    <Row>
-      <Card style={{ width: "20rem" }} className="cards mh-100 mx-5 mb-5">
+    <Col xs={12} lg={3} className="my-3">
+      <Card className=" mx-2 h-100 ">
+        <Card.Img
+          src={`http://localhost:4004/uploads/${image}`}
+          className="previewCardImg"
+        />
         <Card.Body>
-          <Card.Title className="text-center">
-            <Link style={{ textDecoration: "none" }} to={`/products/${_id}`}>
+          <Card.Title>
+            <Link to={`/products/${_id}`} className="cardTitle">
               {name}
             </Link>
           </Card.Title>
-          <Card.Text>{description}</Card.Text>
-          <Card.Text className="text-danger">₱{price}</Card.Text>
+          <Card.Text className="cardText">{description}</Card.Text>
+          <h6>₱{price}</h6>
         </Card.Body>
         <Card.Footer>
-          <Link className="btn btn-primary d-block" to={`/products/${_id}`}>
+          <Link className="btn btnDetails d-block" to={`/products/${_id}`}>
             Details
           </Link>
         </Card.Footer>
       </Card>
-    </Row>
+    </Col>
   );
 }

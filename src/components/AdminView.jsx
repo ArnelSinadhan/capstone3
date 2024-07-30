@@ -20,7 +20,7 @@ export default function AdminView({ productData, fetchData }) {
 
   return (
     <>
-      <h1 className="text-center my-4">Admin Dashboard</h1>
+      <h1 className="text-center mt-5 pt-5">Admin Dashboard</h1>
       <Container className="text-center">
         {!showUserOrders ? (
           <>
@@ -63,14 +63,20 @@ export default function AdminView({ productData, fetchData }) {
         <Container>
           <Row>
             {productData.map((product) => (
-              <Col xs={12} md={12} lg={4} key={product._id} className="mb-4">
+              <Col xs={12} md={12} lg={4} key={product._id} className=" mb-4">
                 <Card
                   style={{
                     width: "100%",
-                    opacity: product.isActive ? 1 : 0.5,
+                    opacity: product.isActive ? 1 : 0.6,
                     position: "relative",
                   }}
-                  className="text-center">
+                  className="text-center h-100 ">
+                  <Card.Img
+                    variant="top"
+                    src={`http://localhost:4004/uploads/${product.image}`}
+                    alt="productImg"
+                    className="adminCardImg"
+                  />
                   <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Text>{product.description}</Card.Text>
@@ -82,8 +88,8 @@ export default function AdminView({ productData, fetchData }) {
                           top: "50%",
                           left: "50%",
                           transform: "translate(-50%, -50%)",
-                          backgroundColor: "rgba(255, 255, 255)",
-                          padding: "10px",
+                          backgroundColor: "black",
+                          padding: "55px",
                           borderRadius: "5px",
                         }}>
                         <h1 className="text-danger">Unavailable</h1>

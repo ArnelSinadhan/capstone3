@@ -1,8 +1,7 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import RemoveCartItem from "./RemoveCartItem";
 import ClearCart from "./ClearCart";
-import shippingImg from "../assets/shipping.png";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,7 @@ export default function CartTable({ cartProp, fetchCart }) {
   const navigate = useNavigate();
 
   function CartItemRow({ item, fetchCart }) {
-    const { productId, name, price, quantity, subtotal } = item;
+    const { productId, name, price, quantity, subtotal, image } = item;
     const [qty, setQty] = useState(quantity);
     const [isFunctional, setIsFunctional] = useState(false);
 
@@ -42,20 +41,17 @@ export default function CartTable({ cartProp, fetchCart }) {
     };
 
     const updateCartQuantity = (productId) => {
-      fetch(
-        "https://capstone2-dn1l.onrender.com/b4/carts/update-cart-quantity",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            productId,
-            quantity: qty,
-          }),
-        }
-      )
+      fetch(`${import.meta.env.VITE_API_URL}/b4/carts/update-cart-quantity`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          productId,
+          quantity: qty,
+        }),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.message === "Item quantity updated successfully") {
@@ -85,50 +81,77 @@ export default function CartTable({ cartProp, fetchCart }) {
     }, [qty]);
 
     return (
-      <tr>
-        <td>
-          <Link to={`/products/${productId}`}>{name}</Link>
-        </td>
-        <td className="text-center">₱{price}</td>
-        <td>
-          <div className="plus-minus d-flex justify-content-center my-1">
-            <Button onClick={minus} className="btn btn-dark">
-              -
-            </Button>
-            <input
-              type="number"
-              value={qty}
-              onChange={changedQty}
-              className="form-control"
-              style={{ width: "4rem", textAlign: "center" }}
-            />
-            <Button onClick={plus} className="btn btn-dark">
-              +
-            </Button>
-          </div>
-        </td>
-        <td>
-          {isFunctional ? (
-            <div className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                onClick={() => updateCartQuantity(productId)}>
-                Save
-              </Button>
-            </div>
-          ) : (
-            <div className="d-flex justify-content-center">
-              <Button variant="danger" disabled>
-                Save
-              </Button>
-            </div>
-          )}
-        </td>
-        <td className="text-center">₱{subtotal}</td>
-        <td>
-          <RemoveCartItem itemId={productId} fetchCart={fetchCart} />
-        </td>
-      </tr>
+      <>
+        <Container>
+          <Row>
+            <Col className="shoppingCart my-3">
+              <Row className="justify-content-center align-items-center">
+                <Col
+                  lg={3}
+                  className="d-flex flex-column justify-content-center align-items-center my-3">
+                  <img
+                    src={`http://localhost:4004/uploads/${image}`}
+                    alt="product Images"
+                    className="img-fluid "
+                    width={150}
+                    height={150}
+                  />
+                  <Link to={`/products/${productId}`}>{name}</Link>
+                  <p className="text-center">₱{price}</p>
+                </Col>
+                <Col
+                  lg={3}
+                  className=" d-flex justify-content-center align-items-center my-3">
+                  <Container className="p-0 quantityBox ">
+                    <Container className="quantityWrapper">
+                      <Button onClick={minus} className="btnMinus">
+                        -
+                      </Button>
+                      <input
+                        type="text"
+                        value={qty}
+                        onChange={changedQty}
+                        className="addToCartInput"
+                        style={{
+                          width: "6rem",
+                          textAlign: "center",
+                          backgroundColor: "transparent",
+                        }}
+                      />
+                      <Button onClick={plus} className="btnPlus">
+                        +
+                      </Button>
+                    </Container>
+                  </Container>
+                </Col>
+                <Col lg={3} className="my-3">
+                  {isFunctional ? (
+                    <div className="d-flex justify-content-center">
+                      <Button
+                        variant="primary"
+                        onClick={() => updateCartQuantity(productId)}>
+                        Save
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-center">
+                      <Button variant="danger" disabled>
+                        Save
+                      </Button>
+                    </div>
+                  )}
+                </Col>
+                <Col
+                  lg={3}
+                  className="d-lg-flex  justify-content-center align-items-center gap-4 my-3">
+                  <p className="text-center m-0">₱{subtotal}</p>
+                  <RemoveCartItem itemId={productId} fetchCart={fetchCart} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </>
     );
   }
 
@@ -143,7 +166,7 @@ export default function CartTable({ cartProp, fetchCart }) {
   }, [cartProp]);
 
   const handleCheckout = () => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/orders/checkout", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/orders/checkout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -177,57 +200,26 @@ export default function CartTable({ cartProp, fetchCart }) {
   };
   return (
     <>
-      {/* <h1 className="text-center py-4">Your Shopping Cart</h1>
-      <Table striped bordered hover responsive className="cartTable">
-        <thead>
-          <tr className="text-center">
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Edit</th>
-            <th>Subtotal</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((item, index) => (
-            <CartItemRow
-              key={item.productId || index}
-              item={item}
-              fetchCart={fetchCart}
-            />
-          ))}
-          <tr>
-            <td colSpan="3" className="text-center">
-              <h5 className="pt-2" style={{ fontStyle: "italic" }}>
-                Shop till you drop!
-              </h5>
-            </td>
-            <td colSpan="3">
-              <h3 className="text-center">Total: ₱{totalPrice}</h3>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="6">
-              <div className="d-flex justify-content-between px-2">
-                <Button variant="primary" onClick={handleCheckout}>
-                  Check Out ({totalQuantity})
-                </Button>
-                <h5 style={{ fontStyle: "italic" }} className="pt-2">
-                  <img
-                    src={shippingImg}
-                    alt="shipping Image"
-                    className="img-fluid"
-                    style={{ width: "100px", height: "auto" }}
-                  />
-                  Free shipping with min order of ₱3,000!
-                </h5>
-                <ClearCart user={userId} fetchCart={fetchCart} />
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </Table> */}
+      <h1 className="pt-5 mt-5">Your Shopping Cart</h1>
+
+      {cartItems.map((item, index) => (
+        <CartItemRow
+          key={item.productId || index}
+          item={item}
+          fetchCart={fetchCart}
+        />
+      ))}
+      <div className="d-lg-flex  justify-content-between">
+        <h3>Total: ₱{totalPrice}</h3>
+        <div className="d-xs-grid">
+          <Button
+            onClick={handleCheckout}
+            className="mx-4 checkOutBtn p-2 px-4">
+            Check Out ({totalQuantity})
+          </Button>
+          <ClearCart user={userId} fetchCart={fetchCart} />
+        </div>
+      </div>
     </>
   );
 }

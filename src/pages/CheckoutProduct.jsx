@@ -9,7 +9,7 @@ export default function CheckoutProduct() {
 
   useEffect(() => {
     // Fetch order details from the server or local storage
-    fetch("https://capstone2-dn1l.onrender.com/b4/orders/my-orders", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/orders/my-orders`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

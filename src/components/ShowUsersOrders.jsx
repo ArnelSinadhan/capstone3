@@ -6,7 +6,7 @@ export default function ShowUserOrders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/orders/all-orders", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/orders/all-orders`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

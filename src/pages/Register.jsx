@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../UserContext";
-import loginImg from "../assets/login.png";
 import Swal from "sweetalert2";
 
 export default function Register() {
@@ -40,7 +39,7 @@ export default function Register() {
     // Prevents the page redirection via form submission
     e.preventDefault();
 
-    fetch("https://capstone2-dn1l.onrender.com/b4/users/register", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,10 +101,7 @@ export default function Register() {
   return (
     <>
       <Container>
-        <Row>
-          <Col md={{ order: "second", span: 6 }} className="registerImg">
-            <img src={loginImg} alt="eCommerce" className="img-fluid" />
-          </Col>
+        <Row className="mt-5 pt-5 justify-content-center">
           <Col
             md={{ order: "first", span: 6 }}
             xs={12}

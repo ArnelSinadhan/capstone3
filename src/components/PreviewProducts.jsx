@@ -4,23 +4,30 @@ import { Link } from "react-router-dom";
 export default function PreviewProducts(props) {
   const { breakPoint, data } = props;
 
-  const { _id, name, description, price } = data;
+  const { _id, name, description, price, image } = data;
 
-	return(
-		<Col xs={12} md={breakPoint}>
-	        <Card className="previewCard h-100 mx-2 mb-2">
-	            <Card.Body className="d-grid align-content-center">
-	                <Card.Title className="text-center">
-	                    <Link style={{textDecoration: 'none'}} to={`/products/${_id}`}>{name}</Link>
-	                </Card.Title>
-	                <Card.Text>{description}</Card.Text>
-	            </Card.Body>
-	            <Card.Footer>
-	                <h5 className="text-center">₱{price}</h5>
-	                <Link className="btn btn-primary d-block" to={`/products/${_id}`}>Details</Link>
-	            </Card.Footer>
-	        </Card>
-		</Col>
-	)
+  return (
+    <Col xs={12} lg={3} md={breakPoint} className="my-3">
+      <Card className=" mx-2 h-100 ">
+        <Card.Img
+          src={`http://localhost:4004/uploads/${image}`}
+          className="previewCardImg"
+        />
+        <Card.Body>
+          <Card.Title>
+            <Link to={`/products/${_id}`} className="cardTitle">
+              {name}
+            </Link>
+          </Card.Title>
+          <Card.Text className="cardText">{description}</Card.Text>
+          <h6>₱{price}</h6>
+        </Card.Body>
+        <Card.Footer>
+          <Link className="btn btnDetails d-block" to={`/products/${_id}`}>
+            Details
+          </Link>
+        </Card.Footer>
+      </Card>
+    </Col>
+  );
 }
-

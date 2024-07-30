@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 export default function RemoveCartItem({ itemId, fetchCart }) {
   const handleDelete = (itemId) => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/carts/remove-from-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/carts/remove-from-cart`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

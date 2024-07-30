@@ -8,7 +8,7 @@ export default function ProductSearch() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        "https://capstone2-dn1l.onrender.com/b4/products/search-by-name",
+        `${import.meta.env.VITE_API_URL}/b4/products/search-by-name`,
         {
           method: "POST",
           headers: {
@@ -25,31 +25,31 @@ export default function ProductSearch() {
   };
 
   return (
-    <div className="my-5 text-white">
+    <div className=" text-white">
       <h2>Search Products</h2>
-      <div className="form-group">
+      <div className="form-group d-flex gap-2" style={{ height: "40px" }}>
         <input
           type="text"
           id="name"
           className="form-control"
           placeholder="Product name"
-          style={{ width: "20rem" }}
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
+        <button className="btn btn-primary" onClick={handleSearch}>
+          Search
+        </button>
       </div>
-      <button className="btn btn-primary my-3" onClick={handleSearch}>
-        Find
-      </button>
-      <h4>Search Results:</h4>
+
+      <h4 className="m-0">Search Results:</h4>
       {searchResults.length > 0 ? (
-        <ul>
+        <ul className="d-flex justify-content-center">
           {searchResults.map((product) => (
             <ProductCard productProp={product} key={product._id} />
           ))}
         </ul>
       ) : (
-        <p>Product not found.</p>
+        <p className="m-0">Product not found.</p>
       )}
     </div>
   );

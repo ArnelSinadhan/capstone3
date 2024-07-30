@@ -8,7 +8,7 @@ export default function CartView() {
   const [cartProducts, setCartProducts] = useState([]);
 
   const fetchCart = () => {
-    fetch("https://capstone2-dn1l.onrender.com/b4/carts/get-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/carts/get-cart`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default function CartView() {
   return (
     <div className="cartPage">
       <Container>
-        <Carts cartData={cartProducts} fetchCart={fetchCart} />;
+        <Carts cartData={cartProducts} fetchCart={fetchCart} />
       </Container>
     </div>
   );

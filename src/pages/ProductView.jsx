@@ -12,6 +12,7 @@ export default function ProductView() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [isClickable, setIsClickable] = useState(false);
 
@@ -39,7 +40,7 @@ export default function ProductView() {
   };
 
   function addCart(productId) {
-    fetch("https://capstone2-dn1l.onrender.com/b4/carts/add-to-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/b4/carts/add-to-cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,6 +53,7 @@ export default function ProductView() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         console.log(data.message);
 
         if (data.message === "Action Forbidden") {
@@ -84,7 +86,7 @@ export default function ProductView() {
   useEffect(() => {
     console.log(productId);
 
-    fetch(`https://capstone2-dn1l.onrender.com/b4/products/${productId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/b4/products/${productId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -92,6 +94,7 @@ export default function ProductView() {
         setName(data.name);
         setPrice(data.price);
         setDescription(data.description);
+        setImage(data.image);
       });
   }, [productId]);
 
@@ -104,61 +107,61 @@ export default function ProductView() {
   }, [quantity]);
 
   return (
-    <Container className="mt-5">
-      <Row>
-        <Col lg={{ span: 6, offset: 3 }}>
-          <Card>
-            <Card.Body className="text-center">
-              <Card.Title className="bg-dark text-white py-2">
-                {name}
-              </Card.Title>
-              <Card.Subtitle>Description:</Card.Subtitle>
-              <Card.Text>{description}</Card.Text>
-              <Card.Subtitle>Price:</Card.Subtitle>
-              <Card.Text>₱{price}</Card.Text>
-              <Card.Subtitle>Quantity:</Card.Subtitle>
-              <div className="increment-decrement justify-content-center my-1">
-                <Button onClick={decrement} className="btn btn-dark">
-                  -
-                </Button>
-                <input
-                  type="number"
-                  value={quantity}
-                  onChange={handleChange}
-                  className="form-control"
-                  style={{ width: "6rem", textAlign: "center" }}
-                />
-                <Button onClick={increment} className="btn btn-dark">
-                  +
+    <Container className="mt-5 pt-5">
+      <Row className="align-items-center">
+        <Col lg={4}>
+          <img
+            src={`http://localhost:4004/uploads/${image}`}
+            alt=""
+            className="img-fluid card-img"
+          />
+        </Col>
+        <Col lg={8} className="p-3">
+          <h2 className="py-2">{name}</h2>
+          <p>{description}</p>
+          <h4>Price: </h4>
+          <p>₱{price}</p>
+          <h4>Quantity: </h4>
+          <Container className="p-0 mb-3 quantityBox ">
+            <Container className="quantityWrapper">
+              <Button onClick={decrement} className="btnMinus">
+                -
+              </Button>
+              <input
+                type="text"
+                value={quantity}
+                onChange={handleChange}
+                className="addToCartInput"
+                style={{ width: "6rem", textAlign: "center" }}
+              />
+              <Button onClick={increment} className="btnPlus">
+                +
+              </Button>
+            </Container>
+          </Container>
+          {user.id !== null && user.id !== undefined ? (
+            isClickable ? (
+              <div className="d-grid">
+                <Button
+                  size="lg"
+                  variant="primary"
+                  block="true"
+                  onClick={() => addCart(productId)}>
+                  Add to Cart
                 </Button>
               </div>
-            </Card.Body>
-            <Card.Footer>
-              {user.id !== null && user.id !== undefined ? (
-                isClickable ? (
-                  <div className="d-grid">
-                    <Button
-                      size="lg"
-                      variant="primary"
-                      block="true"
-                      onClick={() => addCart(productId)}>
-                      Add to Cart
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="d-grid">
-                    <Button size="lg" variant="danger" block="true" disabled>
-                      Add to Cart
-                    </Button>
-                  </div>
-                )
-              ) : (
-                <Link className="btn btn-danger d-block" to="/login">
-                  Log in to add a cart
-                </Link>
-              )}
-            </Card.Footer>
-          </Card>
+            ) : (
+              <div className="d-grid">
+                <Button size="lg" variant="danger" block="true" disabled>
+                  Add to Cart
+                </Button>
+              </div>
+            )
+          ) : (
+            <Link className="btn btn-danger d-block" to="/login">
+              Log in to add a cart
+            </Link>
+          )}
         </Col>
       </Row>
     </Container>
