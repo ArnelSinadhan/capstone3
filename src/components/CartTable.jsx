@@ -177,7 +177,7 @@ export default function CartTable({ cartProp, fetchCart }) {
   };
   return (
     <>
-      <h1 className="text-center py-4">Your Shopping Cart</h1>
+      {/* <h1 className="text-center py-4">Your Shopping Cart</h1>
       <Table striped bordered hover responsive className="cartTable">
         <thead>
           <tr className="text-center">
@@ -227,7 +227,7 @@ export default function CartTable({ cartProp, fetchCart }) {
             </td>
           </tr>
         </tbody>
-      </Table>
+      </Table> */}
     </>
   );
 }
