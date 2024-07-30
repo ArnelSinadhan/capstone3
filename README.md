@@ -2,6 +2,10 @@
 
 An e-commerce web application built using the MERN stack (MongoDB, Express.js, React, and Node.js).
 
+## Project Link
+
+Check out the project [here](https://capstone3-wine.vercel.app).
+
 ## Credentials
 
 **Admin**
