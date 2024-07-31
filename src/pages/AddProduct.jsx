@@ -15,14 +15,17 @@ export default function AddProduct({ handleClose, fetchData }) {
 
   function createProduct(e) {
     e.preventDefault();
-    console.log(file);
+    console.log(file); // Ensure file is correctly selected
+
     let token = localStorage.getItem("token");
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
     formData.append("price", price);
-    formData.append("file", file); // Add file to formData
+    if (file) {
+      formData.append("file", file); // Add file to formData only if it's selected
+    }
 
     fetch(`${import.meta.env.VITE_API_URL}/b4/products`, {
       method: "POST",
@@ -43,6 +46,7 @@ export default function AddProduct({ handleClose, fetchData }) {
           setName("");
           setDescription("");
           setPrice("");
+          setFile(null); // Clear file input
 
           Swal.fire({
             title: "Success on Adding product",
@@ -109,7 +113,6 @@ export default function AddProduct({ handleClose, fetchData }) {
           <Form.Label>Product Image</Form.Label>
           <Form.Control
             type="file"
-            required
             onChange={(e) => setFile(e.target.files[0])} // Handle file input
           />
         </Form.Group>
