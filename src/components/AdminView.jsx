@@ -73,7 +73,7 @@ export default function AdminView({ productData, fetchData }) {
                   className="text-center h-100 ">
                   <Card.Img
                     variant="top"
-                    src={`${import.meta.env.VITE_API_URL}/uploads/${
+                    src={`${import.meta.env.VITE_API_URL}/images/${
                       product.image
                     }`}
                     alt="productImg"
