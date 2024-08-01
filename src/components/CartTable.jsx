@@ -90,7 +90,9 @@ export default function CartTable({ cartProp, fetchCart }) {
                   lg={3}
                   className="d-flex flex-column justify-content-center align-items-center my-3">
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/images/${image}`}
+                    src={`${
+                      import.meta.env.VITE_API_URL
+                    }/b4/products/images/${image}`}
                     alt="product Images"
                     className="img-fluid "
                     width={150}

@@ -9,7 +9,7 @@ export default function ProductCard({ productProp }) {
     <Col xs={12} lg={3} className="my-3">
       <Card className=" mx-2 h-100 ">
         <Card.Img
-          src={`${import.meta.env.VITE_API_URL}/images/${image}`}
+          src={`${import.meta.env.VITE_API_URL}/b4/products/images/${image}`}
           className="previewCardImg"
         />
         <Card.Body>
